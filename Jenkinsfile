@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script{
                     echo "COMPILING THE CODE"
-                    git 'https://github.com/amaddireddy/address.git'
+                    git 'https://github.com/amaddireddy/addressbook.git'
                     sh 'mvn compile'
                 }
                           }
@@ -40,7 +40,7 @@ pipeline {
                     echo "PACKAGING THE CODE" 
                     sh "scp -o StrictHostKeyChecking=no server-script.sh ec2-user@172.31.7.163:/home/ec2-user"
                     sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.7.163 'bash ~/server-script.sh'" 
-                    sh "ssh ec2-user@172.31.7.163 sudo docker build -t amaddireddy/newimage:$BUILD_NUMBER /home/ec2-user/address"
+                    sh "ssh ec2-user@172.31.7.163 sudo docker build -t amaddireddy/newimage:$BUILD_NUMBER /home/ec2-user/addressbook"
                    sh "ssh ec2-user@172.31.7.163 sudo docker login -u $USERNAME -p $PASSWORD" 
                    sh "ssh ec2-user@172.31.7.163 sudo docker push amaddireddy/newimage:$BUILD_NUMBER"
                     }
